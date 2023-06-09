@@ -1,5 +1,8 @@
 import Home from './components/home/Home.vue'
-import Cadastro from './components/cadastro/Cadastro.vue'
+// const Home = () => System.import('./components/home/Home.vue') 
+const Cadastro = () => System.import('./components/cadastro/Cadastro.vue')
+
+// import Cadastro from './components/cadastro/Cadastro.vue'
 
 export const routes = [
   { path: '', component: Home, titulo: 'Home', name: 'home', menu: true },
