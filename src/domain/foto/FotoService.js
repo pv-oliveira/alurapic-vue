@@ -4,7 +4,10 @@ export default class FotoService {
   }
 
   lista() {
-    return this._resource.query().then((res) => res.json());
+    return this._resource.query().then((res) => res.json(), err => {
+      console.log(err);
+      throw new Error (`Não foi possível carregar as fotos. Tente novamente mais tarde.`);
+    });
   }
 
   cadastra(foto) {
