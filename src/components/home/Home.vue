@@ -1,7 +1,9 @@
 <template>
   <div>
-    <h1 class="centralizado">Alurapic</h1>
+    <h1 class="centralizado">{{ titulo }}</h1>
 
+    <p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
+    
     <input
       type="search"
       class="filtro"
@@ -44,7 +46,8 @@ export default {
   data() {
     return {
       fotos: [],
-
+      mensagem: "",
+      titulo: "Alurapic",
       filtro: "",
     };
   },
@@ -62,14 +65,25 @@ export default {
   methods: {
     
     remove(foto) {
-      alert("Removendo" + foto.titulo);
+
+      this.resource.delete({ id: foto._id })
+        .then(res => {
+          let indice = this.fotos.indexOf(foto);
+          this.fotos.splice(indice, 1);
+          this.mensagem = `Foto ${foto.titulo} removida com sucesso`;
+        })
+        .catch(err => {
+          console.log(err);
+          this.mensagem = `Não foi possível remover a foto ${foto.titulo}`;
+        });
     }
 
   },
 
   created() {
-    this.$http
-      .get("http://localhost:3000/v1/fotos")
+    this.resource = this.$resource("v1/fotos{/id}");
+    this.resource
+      .query()
       .then((res) => res.json())
       .then(
         (fotos) => (this.fotos = fotos),
