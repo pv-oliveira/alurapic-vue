@@ -12,7 +12,7 @@
     />
 
     <ul class="lista-fotos">
-      <li class="lista-fotos-item" v-for="foto of fotosComFiltro">
+      <li class="lista-fotos-item" v-for="foto of fotosComFiltro" :key="foto._id">
         <meu-painel :titulo="foto.titulo">
           <imagem-responsiva v-meu-transform:rotate.animate="15" :url="foto.url" :titulo="foto.titulo" />
           <router-link :to="{ name: 'alterar', params: { id: foto._id } }">
